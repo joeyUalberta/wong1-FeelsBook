@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">wong1-FeelsBook</string>
+    <string name="history_file">file.sav</string>
+</resources>
