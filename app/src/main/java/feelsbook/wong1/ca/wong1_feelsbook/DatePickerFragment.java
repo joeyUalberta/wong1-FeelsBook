@@ -12,6 +12,10 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment {
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
+    /**
+     * Allow us to set its listener directly
+     * @param dateSetListener   indicate what this datepicker do with the dat
+     */
     public void setDateSetListener(DatePickerDialog.OnDateSetListener dateSetListener) {
         this.dateSetListener = dateSetListener;
     }

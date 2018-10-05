@@ -11,7 +11,12 @@ import android.support.v4.app.DialogFragment;
 import java.text.DateFormat;
 import java.util.Calendar;
 
+/**
+ * Use to create a a picker for user to choose time
+ */
 public class TimePickerFragment extends DialogFragment {
+
+
     private TimePickerDialog.OnTimeSetListener timeSetListener;
 
     public void setTimeSetListener(TimePickerDialog.OnTimeSetListener timeSetListener) {

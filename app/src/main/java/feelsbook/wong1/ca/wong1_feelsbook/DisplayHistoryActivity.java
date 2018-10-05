@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 public class DisplayHistoryActivity extends AppCompatActivity implements HistoryListener {
@@ -33,6 +34,11 @@ public class DisplayHistoryActivity extends AppCompatActivity implements History
     CustomAdapter customAdapter;
     String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
     ArrayList<Emotion> emotionList= new ArrayList<Emotion>();
+
+    /**
+     * Set up adapter and display counts of each emotions
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,12 @@ public class DisplayHistoryActivity extends AppCompatActivity implements History
         simpleList.setAdapter(customAdapter);
         getCounts();
     }
+
+    /**
+     * This method is called by CustomAdapter, which will let user choose time and update
+     * the files, which will then tell the adapter to update its data
+     * @param i index of the emotion to have date changed
+     */
     public void setDateAndTime(final int i){
         Log.d("joey","Choose time");
         DatePickerFragment myFragment= new DatePickerFragment();
@@ -69,6 +81,7 @@ public class DisplayHistoryActivity extends AppCompatActivity implements History
         myFragment.show(getSupportFragmentManager(),"Choose Date");
     }
 
+    //Load the emotions from file
     private void loadFromFile(){
         try {
             FileInputStream fis = openFileInput(historyFile);
@@ -91,8 +104,20 @@ public class DisplayHistoryActivity extends AppCompatActivity implements History
             Log.d("joey", e.getMessage());
         }
     }
+
+    //Store Emotions/Tweet back to the data file
     private void saveTweets(){
         try {
+            emotionList.sort(new Comparator<Emotion>() {
+                @Override
+                public int compare(Emotion o1, Emotion o2) {
+                    if(o1.getDate().before(o2.getDate())){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                }
+            });
             FileOutputStream fos= openFileOutput(historyFile,0);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             Gson gson =new Gson();
@@ -108,6 +133,11 @@ public class DisplayHistoryActivity extends AppCompatActivity implements History
             e.printStackTrace();
         }
     }
+
+    /**
+     * Start counting how many emotion are there,
+     * and display them in the text views
+     */
     public void getCounts(){
         loadFromFile();
         int num_love=0;

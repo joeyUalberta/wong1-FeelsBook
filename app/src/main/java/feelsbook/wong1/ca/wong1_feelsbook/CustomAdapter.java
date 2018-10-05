@@ -32,6 +32,7 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -143,7 +144,21 @@ public class CustomAdapter extends BaseAdapter {
             }
         });
     }
+
+    /**
+     * Save the modified data to the file
+     */
     private void saveTweets(){
+        emotionList.sort(new Comparator<Emotion>() {
+            @Override
+            public int compare(Emotion o1, Emotion o2) {
+                if(o1.getDate().before(o2.getDate())){
+                    return -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
         try {
             FileOutputStream fos= context.openFileOutput(historyFile,0);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -163,7 +178,10 @@ public class CustomAdapter extends BaseAdapter {
         }
         Log.d("Joey","No error in saveTweets");
     }
-    //never used but might be needed later
+
+    /**
+     * Load the file back
+     */
     private void loadFromFile(){
         try {
             FileInputStream fis = context.openFileInput(historyFile);

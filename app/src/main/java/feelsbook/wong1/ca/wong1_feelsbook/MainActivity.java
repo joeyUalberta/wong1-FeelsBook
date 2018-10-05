@@ -21,8 +21,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Main screen of the program, it will be used to navigate to see emotion history
+ * or it can is be used to add emotion/feelings.
+ */
 public class MainActivity extends AppCompatActivity {
     private String emotionSelected="None";
     String historyFile;
@@ -69,13 +74,33 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    /**
+     * Set what emotion to add
+     * @param view  :the button correspond to the emotion
+     */
     public void setEmotion(View view){
         Button b = (Button) view;
         emotionSelected = b.getText().toString();
         Log.d("joey",b.getText().toString());
     }
+
+    /**
+     * Save the new "Emotion" to the file
+     * @param newEmotion    created by user by clicking add button
+     */
     private void saveInFile(Emotion newEmotion){
         emotionList.add(newEmotion);
+        emotionList.sort(new Comparator<Emotion>() {
+            @Override
+            public int compare(Emotion o1, Emotion o2) {
+                if(o1.getDate().before(o2.getDate())){
+                    return -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
         try {
             FileOutputStream fos= openFileOutput(historyFile,0);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -92,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Load the old emotions file, so the program can save them as a arrayList in saveInFile
+     * later
+     */
     private void loadFromFile(){
         try {
             FileInputStream fis = openFileInput(historyFile);

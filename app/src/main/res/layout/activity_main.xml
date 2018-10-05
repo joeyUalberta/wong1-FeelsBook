@@ -61,6 +61,7 @@
         android:layout_marginTop="20dp"
         android:hint="Comment"
         android:inputType="text"
+        android:maxLength="100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toStartOf="parent"
