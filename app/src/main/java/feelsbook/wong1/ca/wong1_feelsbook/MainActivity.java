@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * Set what emotion to add
+     * Set what emotion to add, this is called by the onclick listener attached at each button
      * @param view  :the button correspond to the emotion
      */
     public void setEmotion(View view){

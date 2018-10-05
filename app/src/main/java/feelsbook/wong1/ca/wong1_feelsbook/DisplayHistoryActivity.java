@@ -28,6 +28,10 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * This activity display the history of the emotions/feelings through an adapter, it also display stats
+ * at the bottom
+ */
 public class DisplayHistoryActivity extends AppCompatActivity implements HistoryListener {
     String historyFile;
     ListView simpleList;
